@@ -3,6 +3,6 @@
     "endpoint": "http://localhost:8080/graphql"
   },
   "production": {
-    "endpoint": "http://localhost:8080/graphql"
+    "endpoint": "https://lit-plateau-55522.herokuapp.com/graphql"
   }
 }

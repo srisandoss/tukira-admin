@@ -1,6 +1,14 @@
 import pmongo from 'promised-mongo';
 
-const db = pmongo('reduxtest', ['todos']);
+let MONGODB_URI = 'reduxtest';
+
+if (process.env.MONGODB_URI) MONGODB_URI = process.env.MONGODB_URI;
+
+const db = pmongo(MONGODB_URI, {
+  authMechanism: 'ScramSHA1'
+}, ['todos']);
+
+
 
 export function getTodo(_id) {
   return db.todos.findOne({ _id: pmongo.ObjectId(_id) });
