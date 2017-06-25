@@ -3,7 +3,7 @@ import {
   EDIT_TODO,
   REMOVE_TODO,
   SINGLE_TODO,
-  CREATE_TODO
+  CREATE_TODO,
 } from '../actions/actionTypes';
 
 function getIndexOfTodoItem(action, state) {
@@ -23,7 +23,7 @@ function todos(state = [], action) {
   if (action.error) {
 	return {
 	  result: state.result,
-	  error: action.error
+	  error: action.error,
 	};
   }
 
@@ -37,7 +37,7 @@ function todos(state = [], action) {
 	  return {
 		result: [
 		  ...state.result,
-		  action.result
+		  action.result,
 		]
 	  };
 	case EDIT_TODO:
@@ -73,5 +73,5 @@ function todos(state = [], action) {
 }
 
 module.exports = {
-  todos
+  todos,
 };

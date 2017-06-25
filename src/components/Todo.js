@@ -8,7 +8,7 @@ import {
   Icon,
   Button,
   Checkbox,
-  ButtonGroup
+  ButtonGroup,
 } from '@sketchpixy/rubix';
 
 @withRouter

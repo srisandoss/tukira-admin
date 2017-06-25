@@ -13,7 +13,7 @@ import {
   Panel,
   Alert,
   PanelBody,
-  PanelContainer
+  PanelContainer,
 } from '@sketchpixy/rubix';
 
 @connect((state) => state)

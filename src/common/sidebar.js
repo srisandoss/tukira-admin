@@ -29,8 +29,9 @@ class ApplicationSidebar extends React.Component {
                   { /** Pages Section */ }
                   <div className='sidebar-header'>PAGES</div>
 
-                  <SidebarNavItem glyph='icon-fontello-gauge' name='Home' href='/' />
-                  <SidebarNavItem glyph='icon-fontello-gauge' name='Home 2' href='/home2' />
+                 
+				  <SidebarNavItem glyph='icon-outlined-todolist' name='All Todos' href='/' />
+				  <SidebarNavItem glyph='icon-outlined-pencil' name='Edit Todo' href='/todo/edit/:id' />
                 </SidebarNav>
               </div>
             </Col>
