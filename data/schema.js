@@ -14,75 +14,106 @@ import {
   getTodos,
   createTodo,
   updateTodo,
-  removeTodo
+  removeTodo,
 } from './database';
+
+import {
+  toGlobalId,
+  fromGlobalId,
+  globalIdField,
+  offsetToCursor,
+  connectionArgs,
+  nodeDefinitions,
+  connectionFromArray,
+  connectionDefinitions,
+  connectionFromPromisedArray,
+  mutationWithClientMutationId
+} from 'graphql-relay';
+
+const greetingsType = new GraphQLObjectType({
+  name: 'Greetings',
+  fields: () => ({
+    hello: {
+      type: GraphQLString,
+      args: {
+        message: {
+          type: GraphQLString
+        }
+      },
+      resolve(parentValue, { message }) {
+        return `received: ${message}`;
+      }
+    }
+  })
+});
 
 const todoType = new GraphQLObjectType({
   name: 'Todo',
   fields: () => ({
-		_id: {
-			type: GraphQLString,
-			resolve: ({ _id }) => _id
-		},
-		todo: {
-			type: GraphQLString,
-			resolve: ({ todo }) => todo
-		},
-		completed: {
-			type: GraphQLBoolean,
-			resolve: ({ completed }) => completed
-		}
+	_id: {
+	  type: GraphQLString,
+	  resolve: ({ _id }) => _id,
+	},
+	todo: {
+	  type: GraphQLString,
+	  resolve: ({ todo }) => todo,
+	},
+	completed: {
+	  type: GraphQLBoolean,
+	  resolve: ({ completed }) => completed
+	}
   })
 });
 
 const queryType = new GraphQLObjectType({
   name: 'Query',
   fields: () => ({
-		todo: {
-			type: todoType,
-			args: {
-				_id: { type: new GraphQLNonNull(GraphQLString) }
-			},
-			resolve: (_, { _id }) => getTodo(_id)
-		},
-		todos: {
-			type: new GraphQLList(todoType),
-			resolve: () => getTodos()
-		}
+	todo: {
+	  type: todoType,
+	  args: {
+		_id: { type: new GraphQLNonNull(GraphQLString) },
+	  },
+	  resolve: (_, { _id }) => getTodo(_id),
+	},
+	todos: {
+	  type: new GraphQLList(todoType),
+	  resolve: () => getTodos(),
+	},
   })
 });
+
 
 const mutationType = new GraphQLObjectType({
   name: 'Mutation',
   fields: () => ({
-		createTodo: {
-			type: todoType,
-			args: {
-				todo: { type: new GraphQLNonNull(GraphQLString) }
-			},
-			resolve: (_, { todo }) => createTodo(todo)
-		},
-		updateTodo: {
-			type: todoType,
-			args: {
-				_id: { type: new GraphQLNonNull(GraphQLString) },
-				todo: { type: GraphQLString },
-				completed: { type: GraphQLBoolean }
-			},
-			resolve: (_, { _id, todo, completed }) =>
-						updateTodo(_id, todo, completed)
-		},
-		removeTodo: {
-			type: todoType,
-			args: {
-				_id: { type: new GraphQLNonNull(GraphQLString) }
-			},
-			resolve: (_, { _id }) => removeTodo(_id)
-		}
+	createTodo: {
+	  type: todoType,
+	  args: {
+		todo: { type: new GraphQLNonNull(GraphQLString) },
+	  },
+	  resolve: (_, { todo }) => createTodo(todo),
+	},
+	updateTodo: {
+	  type: todoType,
+	  args: {
+		_id: { type: new GraphQLNonNull(GraphQLString) },
+		todo: { type: GraphQLString },
+		completed: { type: GraphQLBoolean },
+	  },
+	  resolve: (_, { _id, todo, completed }) =>
+				  updateTodo(_id, todo, completed),
+	},
+	removeTodo: {
+	  type: todoType,
+	  args: {
+		_id: { type: new GraphQLNonNull(GraphQLString) },
+	  },
+	  resolve: (_, { _id }) => removeTodo(_id),
+	}
   })
 });
 
 export default new GraphQLSchema({
   query: queryType,
-  mutation: mutationType
+  mutation: mutationType,
 });
